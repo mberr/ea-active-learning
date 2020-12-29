@@ -15,7 +15,7 @@ https://arxiv.org/abs/2001.08943
 
 # Installation
 
-Setup and activate virtual environment:
+Setup and activate a virtual environment:
 
 ```shell script
 python3.8 -m venv ./venv
