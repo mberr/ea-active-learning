@@ -47,23 +47,23 @@ TRACKING_URI=http://localhost:5000
 # Experiments
 
 For all experiments the results are logged to the running MLFlow instance. You can inspect the results during training by accessing the `TRACKING_URI` through a browser.
+Moreover, all experiments are synced via the MLFlow instance.
+Thus, you can start multiple instances of each command on different worker machines to parallelize the experiment.
 
 ## Random Baseline
 
 To run the random baseline use
 
-```bash
-cd executables
-PYTHONPATH=../src python3 evaluate_active_learning_heuristic.py --phase=random --tracking_uri=${TRACKING_URI}
+```shell script
+PYTHONPATH=./src python3 executables/evaluate_active_learning_heuristic.py --phase=random --tracking_uri=${TRACKING_URI}
 ```
 
 ## Hyperparameter Search
 
 To run the hyperparameter search use
 
-```bash
-cd executables
-PYTHONPATH=../src python3 evaluate_active_learning_heuristic.py --phase=hpo --tracking_uri=${TRACKING_URI}
+```shell script
+PYTHONPATH=./src python3 executables/evaluate_active_learning_heuristic.py --phase=hpo --tracking_uri=${TRACKING_URI}
 ```
 
 _Note: The hyperparameter searches takes a significant amount of time (~multiple days), and requires access to GPU(s). You can abort the script at any time, and inspect the current results via the web interface of MLFlow._
@@ -72,7 +72,16 @@ _Note: The hyperparameter searches takes a significant amount of time (~multiple
 
 To rerun the best configurations we found in our hyperparameter search use
 
-```bash
-cd executables
-PYTHONPATH=../src python3 evaluate_active_learning_heuristic.py --phase=best --tracking_uri=${TRACKING_URI}
+```shell script
+PYTHONPATH=./src python3 executables/evaluate_active_learning_heuristic.py --phase=best --tracking_uri=${TRACKING_URI}
 ```
+
+# Evaluation
+
+To reproduce the tables and numbers of the paper use
+
+```bash
+PYTHONPATH=./src python3 executables/collate_results.py --tracking_uri=${TRACKING_URI}
+```
+
+To avoid re-downloading data from a remote MLFLow instance, the metrics and parameters get buffered. To enforce a re-download, e.g., since you conducted additional runs, use `--force`.
