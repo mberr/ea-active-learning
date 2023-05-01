@@ -1,6 +1,6 @@
 frozendict~=1.2
 humanize~=3.2.0
-mlflow~=1.13
+mlflow>=2.3.1
 networkx~=2.5
 numpy~=1.19.4
 pandas~=1.2.0
